@@ -13,6 +13,6 @@ def csv_to_sql_insert(csv_filename, table_name):
             w.write(sql)
             w.write("\n")
 
-csv_to_sql_insert("point_grey_station_data.csv", "weather_data")
+csv_to_sql_insert("Kelowna_48369_station_data.csv", "weather_data")
 
 w.close()
