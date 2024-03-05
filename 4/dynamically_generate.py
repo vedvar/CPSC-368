@@ -7,9 +7,11 @@ def csv_to_sql_insert(csv_filename, table_name):
         
         # Create table if it doesn't exist
         columns_with_type = ', '.join([f'{col} VARCHAR2(100)' for col in columns])
+        drop_table = f"DROP TABLE {table_name};"
         create_table_sql = f"CREATE TABLE {table_name} ({columns_with_type});"
         
         with open("sql_table.sql", "a") as w:
+            w.write(drop_table + "\n")
             w.write(create_table_sql)
             w.write("\n")
             
