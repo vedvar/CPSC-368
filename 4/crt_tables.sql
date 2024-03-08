@@ -30,5 +30,5 @@ CREATE TABLE wildfire_data (﻿Year           VARCHAR2(100),
                             Total_Hectares   VARCHAR2(100), 
                             Number_of_Fires  VARCHAR2(100), 
                             Max_Fire_Size_ha VARCHAR2(100),
-                            PRIMARY KEY (Year));
+                            PRIMARY KEY (﻿Year));
 
