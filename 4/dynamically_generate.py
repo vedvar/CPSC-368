@@ -7,8 +7,8 @@ def csv_to_sql_insert(csv_filename, table_name):
         
         # Create table if it doesn't exist
         columns_with_type = ', '.join([f'{col} VARCHAR2(100)' for col in columns])
-        drop_table = f"DROP TABLE {table_name};"
-        create_table_sql = f"CREATE TABLE {table_name} ({columns_with_type});"
+        #drop_table = f"DROP TABLE {table_name};"
+        #create_table_sql = f"CREATE TABLE {table_name} ({columns_with_type});"
         
         with open("sql_table.sql", "a") as w:
             w.write(drop_table + "\n")
@@ -24,3 +24,7 @@ def csv_to_sql_insert(csv_filename, table_name):
                 w.write("\n")
 
 csv_to_sql_insert("Kelowna_48369_station_data.csv", "weather_data")
+csv_to_sql_insert("Middle_Vernon_Creek_Hydro_Data.csv", "hydro_data")
+csv_to_sql_insert("wildfire_data_bc.csv", "wildfire_data")
+
+
