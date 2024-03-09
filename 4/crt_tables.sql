@@ -1,15 +1,15 @@
 /* Drop the table before creating it to make sure that any old table is also dropped*/
 DROP TABLE hydro_data;
-CREATE TABLE hydro_data (Location_ID   VARCHAR2(100),
+CREATE TABLE hydro_data (Location      VARCHAR2(100),
                          Location_Name VARCHAR2(100),  
                          Status        VARCHAR2(100),  
                          Latitude      VARCHAR2(100),  
                          Longitude     VARCHAR2(100),  
-                         Local_Year    VARCHAR2(100),
-                         Local_Month   VARCHAR2(100),
+                         LocalYear     VARCHAR2(100),
+                         LocalMonth    VARCHAR2(100),
                          Value         VARCHAR2(100),  
                          Unit          VARCHAR2(100),
-                         PRIMARY KEY (Local_Year, Local_Month, Location_ID, Location_Name));
+                         PRIMARY KEY (LocalYear, LocalMonth, Location, Location_Name));
 
 
 
