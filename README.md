@@ -2,9 +2,11 @@
 
 This project investigates the connection between annual precipitation and river flow on wildfire severity in the BC interior. As the meteorological processes that cause precipitation or drought are too complex to use as direct inputs for the scope of this project, we use historical annual precipitation and river flow data to make high-level predictions of the severity of wildfires the subsequent year.
 
+
 ## For the Teaching Team:
 
 If you so choose, you may use Ved's Oracle account to run the necessary code. 
+
 
 ### Data Sources:
   - Weather data obtained from the Meteorological Service of Canada at `https://climatedata.ca/download/#station-download`. This is historical daily observed weather station data from the Meteorological Service of Canada and Environment and Climate Change Canada.
