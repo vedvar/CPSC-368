@@ -1,6 +1,8 @@
 import pandas as pd
 import sqlite3
 import matplotlib.pyplot as plt
+import numpy as np
+from scipy.stats import pearsonr
 
 # Create a connection to the SQLite database
 conn = sqlite3.connect('your_database.db')
@@ -26,25 +28,26 @@ df_precipitation['Total_Precipitation'] = pd.to_numeric(df_precipitation['TOTAL_
 # Group the precipitation data by year and calculate the sum
 df_precipitation = df_precipitation.groupby('Year')['Total_Precipitation'].sum().reset_index()
 
+# Merge the wildfire and precipitation data on the 'Year' column
+df_merged = pd.merge(df_wildfire, df_precipitation, on='Year')
+
+# Fit a line to the data
+m, b = np.polyfit(df_merged['Total_Precipitation'], df_merged['Total_Hectares'], 1)
+
+# Calculate the correlation coefficient
+r, _ = pearsonr(df_merged['Total_Precipitation'], df_merged['Total_Hectares'])
+
 # Create the plot
-fig, ax1 = plt.subplots(figsize=(10,6))
+plt.figure(figsize=(10,6))
+plt.scatter(df_merged['Total_Precipitation'], df_merged['Total_Hectares'], color='tab:blue')
+plt.plot(df_merged['Total_Precipitation'], m*df_merged['Total_Precipitation'] + b, color='tab:red')
 
-# Plot the wildfire data
-ax1.plot(df_wildfire['Year'], df_wildfire['Total_Hectares'], label='Wildfire Size', color='tab:blue')
-ax1.set_xlabel('Year')
-ax1.set_ylabel('Total Hectares', color='tab:blue')
-ax1.tick_params(axis='y', labelcolor='tab:blue')
+# Print the equation and R-squared value on the graph
+plt.text(0.05, 0.95, f'y = {m:.2f}x + {b:.2f}\nR-squared = {r**2:.2f}', transform=plt.gca().transAxes)
 
-# Create a second y-axis for the precipitation data
-ax2 = ax1.twinx()
-ax2.plot(df_precipitation['Year'], df_precipitation['Total_Precipitation'], label='Total Precipitation', color='tab:red')
-ax2.set_ylabel('Total Precipitation', color='tab:red')
-ax2.tick_params(axis='y', labelcolor='tab:red')
-
-# Set the x-axis limits
-ax1.set_xlim([2008, df_wildfire['Year'].max()])
-
-fig.tight_layout()
-plt.title('Wildfire Size and Total Precipitation by Year')
+plt.xlabel('Total Precipitation')
+plt.ylabel('Total Hectares')
+plt.title('Wildfire Size vs Total Precipitation')
 plt.show()
-plt.savefig('wildfire_data_wrt_precip_data.png')
+
+plt.savefig('wildfire_data_vs_precip_data.png')
