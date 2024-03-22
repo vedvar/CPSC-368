@@ -113,3 +113,34 @@ plt.savefig('wildfire_data_vs_precip_data.png')
 
 
 ## Create prediction model for annual wildfire size
+# Group the precipitation data by year and calculate the sum
+df_precipitation = df_precipitation.groupby('Year')['Total_Precipitation'].sum().reset_index()
+
+# Merge the wildfire and precipitation data on the 'Year' column
+df_merged = pd.merge(df_wildfire, df_precipitation, on='Year')
+
+# Define the input (X) and output (y) and split the data into training and testing sets
+X = df_merged[['Total_Precipitation']]
+y = df_merged['Total_Hectares']
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Choose Linear Regression model and fit the data
+model = LinearRegression()
+model.fit(X_train, y_train)
+
+# Make predictions
+y_pred = model.predict(X_test)
+
+# Print the coefficient and intercept of the model
+print(f'Coefficients: {model.coef_}')
+print(f'Intercept: {model.intercept_}')
+
+# Print the MSE and r^2 value
+print('Mean squared error: %.2f' % mean_squared_error(y_test, y_pred))
+print('Coefficient of determination: %.2f' % r2_score(y_test, y_pred))
+
+# Initialize a test case and make a prediction using the model
+test_precip = 250
+test_precip_2d = np.array(test_precip).reshape(-1, 1)
+test_wildfire = model.predict(test_precip_2d)
+print(f'Predicted wildfire size for total precipitation of {test_precip}mm is {test_wildfire[0]} hectares ')
