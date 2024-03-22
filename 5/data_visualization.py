@@ -6,18 +6,30 @@ import matplotlib.pyplot as plt
 conn = sqlite3.connect('your_database.db')
 
 # Query the database and load the data into a pandas DataFrame
-df = pd.read_sql_query("SELECT * FROM hydro_data", conn)
+df = pd.read_sql_query("SELECT * FROM wildfire_data", conn)
 
 # Close the connection to the database
 conn.close()
 
+# Convert the 'Year' and 'Total_Hectares' columns to numeric
+df['Year'] = pd.to_numeric(df['Year'], errors='coerce')
+df['Total_Hectares'] = pd.to_numeric(df['Total_Hectares'].str.replace(',', ''), errors='coerce')
+
+#df['Total_Hectares'] = pd.to_numeric(df['Total_Hectares'], errors='coerce')
+
+print(df)
+print(df.columns)
+print(df['Total_Hectares'].dtypes)
+
 # Plot the data
 plt.figure(figsize=(10,6))
-for location in df['Location'].unique():
-    subset = df[df['Location'] == location]
-    plt.plot(subset['LocalMonth'], subset['Value'], label=location)
+plt.plot(df['Year'], df['Total_Hectares'], label='Wildfire Size')
 
-plt.legend()
+plt.xlabel('Year')
+plt.ylabel('Total Hectares')
+plt.title('Wildfire Size by Year')
+plt.legend()  # This will now include 'Wildfire Size' in the legend
+plt.show()
 
 # Save the plot to a file
 plt.savefig('plot.png')
