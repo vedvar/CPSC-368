@@ -1,5 +1,7 @@
 import sqlite3
 
+# Code Source: https://www.ionos.ca/digitalguide/websites/web-development/sqlite3-python/
+
 # Open and read the file
 with open('sql_table.sql', 'r') as f:
     sql_commands = f.read()

@@ -10,6 +10,9 @@ from sklearn.metrics import mean_squared_error, r2_score
 # Create a connection to the SQLite database
 conn = sqlite3.connect('your_database.db')
 
+
+# Code Source: https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.read_sql.html
+
 # Query the database and load the data into Pandas DataFrame
 df_precipitation = pd.read_sql_query("SELECT * FROM weather_data", conn)
 df_hydro = pd.read_sql_query("SELECT * FROM hydro_data", conn)
@@ -17,6 +20,8 @@ df_wildfire = pd.read_sql_query("SELECT * FROM wildfire_data", conn)
 
 # Close the connection to the database
 conn.close()
+
+# Code Source: https://stackoverflow.com/questions/42719749/pandas-convert-string-to-int 
 
 # Cleaning the data for use by converting strings data types to numeric data
 df_wildfire['Year'] = pd.to_numeric(df_wildfire['Year'], errors='coerce')
@@ -26,6 +31,8 @@ df_precipitation['Total_Precipitation'] = pd.to_numeric(df_precipitation['TOTAL_
 df_hydro['Year'] = pd.to_numeric(df_hydro['LocalYear'], errors='coerce')
 df_hydro['Total_Flow'] = pd.to_numeric(df_hydro['Value'], errors='coerce')
 
+
+# Code Source: https://jonathansoma.com/lede/algorithms-2017/classes/fuzziness-matplotlib/how-pandas-uses-matplotlib-plus-figures-axes-and-subplots/
 
 ## Create the first visualization: Graphing Wildfire Size and Total Precipitation by Year
 # Group the precipitation data by year and calculate the sum
@@ -111,6 +118,9 @@ plt.show()
 # Save created graph
 plt.savefig('wildfire_data_vs_precip_data.png')
 
+
+# Code Source: UBC CPSC 330 Applications of Machine Learning course material
+# and https://stackoverflow.com/questions/59829077/how-to-display-r-squared-value-on-my-graph-in-python 
 
 ## Create prediction model for annual wildfire size
 # Group the precipitation data by year and calculate the sum
