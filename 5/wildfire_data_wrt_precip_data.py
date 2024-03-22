@@ -32,14 +32,14 @@ fig, ax1 = plt.subplots(figsize=(10,6))
 # Plot the wildfire data
 ax1.plot(df_wildfire['Year'], df_wildfire['Total_Hectares'], label='Wildfire Size', color='tab:blue')
 ax1.set_xlabel('Year')
-ax1.set_ylabel('Total Hectares', color='tab:blue')
-ax1.tick_params(axis='y', labelcolor='tab:blue')
+ax1.set_ylabel('Total Hectares', color='tab:red')
+ax1.tick_params(axis='y', labelcolor='tab:red')
 
 # Create a second y-axis for the precipitation data
 ax2 = ax1.twinx()
 ax2.plot(df_precipitation['Year'], df_precipitation['Total_Precipitation'], label='Total Precipitation', color='tab:red')
-ax2.set_ylabel('Total Precipitation', color='tab:red')
-ax2.tick_params(axis='y', labelcolor='tab:red')
+ax2.set_ylabel('Total Precipitation', color='tab:blue')
+ax2.tick_params(axis='y', labelcolor='tab:blue')
 
 # Set the x-axis limits
 ax1.set_xlim([2008, df_wildfire['Year'].max()])
